@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
+use App\Models\Post;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -19,7 +21,10 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('create');
+        //Here we are fetching all the categories from the database and passing them to the view.
+        $categories = Category::all();
+        return view('create', compact('categories'));
+
     }
 
     /**
@@ -27,8 +32,20 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'image' => ['required', 'image', 'max:2028'],
+            'title' => ['required' , 'max:255'],
+            'category_id' => ['required', 'integer'],
+            'description' => ['required'],
+        ]);
+
+        $post = new Post();
+        $fileName = time().'_'. $request->image->getClientOriginalName();
+        $filePath = $request->file('image')->storeAs('uploads', $fileName, 'public');
+
+        return $filePath;
     }
+
 
     /**
      * Display the specified resource.
