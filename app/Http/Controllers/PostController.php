@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreatePostRequest;
 use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Http\Request;
@@ -30,20 +31,21 @@ class PostController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CreatePostRequest $request)
     {
-        $request->validate([
-            'image' => ['required', 'image', 'max:2028'],
-            'title' => ['required' , 'max:255'],
-            'category_id' => ['required', 'integer'],
-            'description' => ['required'],
-        ]);
 
-        $post = new Post();
         $fileName = time().'_'. $request->image->getClientOriginalName();
         $filePath = $request->file('image')->storeAs('uploads', $fileName, 'public');
 
-        return $filePath;
+        $post = new Post();
+
+        $post->title = $request->title;
+        $post->category_id = $request->category_id;
+        $post->description = $request->description;
+        $post->image = $filePath;
+        $post->save();
+
+        return redirect()->route('posts.index')->with('success', 'Post created successfully.');
     }
 
 
