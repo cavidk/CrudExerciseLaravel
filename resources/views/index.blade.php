@@ -28,21 +28,25 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>
-                        <img src="https://picsum.photos/id/237/200/300" width="25%" alt="">
-                    </td>
-                    <td>Lorem Ipsum is simply dummy text.</td>
-                    <td>Lorem ipsum dolor sit amet.</td>
-                    <td>News</td>
-                    <td>2-5-23</td>
-                    <td>
-                        <button type="button" class="btn btn-info">Show</button>
-                        <a class="btn btn-primary mx-1">Edit</a>
-                        <button type="button" class="btn btn-danger">Delete</button>
-                    </td>
-                </tr>
+
+                {{--Here we will create a post--}}
+                @foreach($posts as $post)
+                    <tr>
+                        <th scope="row">{{$post->id}}</th>
+                        <td>
+                            <img src="{{Storage::disk('public')->url($post->image)}}" width="25%" alt="">
+                        </td>
+                        <td>Lorem Ipsum is simply dummy text.</td>
+                        <td>Lorem ipsum dolor sit amet.</td>
+                        <td>News</td>
+                        <td>2-5-23</td>
+                        <td>
+                            <button type="button" class="btn btn-info">Show</button>
+                            <a class="btn btn-primary mx-1">Edit</a>
+                            <button type="button" class="btn btn-danger">Delete</button>
+                        </td>
+                    </tr>
+                @endforeach
                 </tbody>
             </table>
         </div>

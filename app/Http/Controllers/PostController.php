@@ -14,7 +14,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        return view('index');
+        $posts =  Post::all();
+        return view('index', compact('posts'));
     }
 
     /**
@@ -38,16 +39,14 @@ class PostController extends Controller
         $filePath = $request->file('image')->storeAs('uploads', $fileName, 'public');
 
         $post = new Post();
+        Post::create(
+            $request->validated()
+        );
 
-        $post->title = $request->title;
-        $post->category_id = $request->category_id;
-        $post->description = $request->description;
-        $post->image = $filePath;
-        $post->save();
+
 
         return redirect()->route('posts.index')->with('success', 'Post created successfully.');
     }
-
 
     /**
      * Display the specified resource.
@@ -80,4 +79,6 @@ class PostController extends Controller
     {
         //
     }
+
+    //TODO: Retrieve all data from database table
 }
