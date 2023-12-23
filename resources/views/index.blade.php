@@ -9,10 +9,10 @@
         </div>
 
         <div class="mt-3 mb-3">
-        <div class="col-md-15 d-flex justify-content-end">
-            <a class="btn btn-success mx-1" href="{{route("posts.create")}}">Create</a>
-            <button type="button" class="btn btn-warning">Trashed</button>
-        </div>
+            <div class="col-md-15 d-flex justify-content-end">
+                <a class="btn btn-success mx-1" href="{{route("posts.create")}}">Create</a>
+                <button type="button" class="btn btn-warning">Trashed</button>
+            </div>
         </div>
         <div class="card-body">
             <table class="table table-striped table-bordered border-dark">
@@ -36,10 +36,12 @@
                         <td>
                             <img src="{{Storage::disk('public')->url($post->image)}}" width="25%" alt="">
                         </td>
-                        <td>Lorem Ipsum is simply dummy text.</td>
-                        <td>Lorem ipsum dolor sit amet.</td>
-                        <td>News</td>
-                        <td>2-5-23</td>
+                        <td>{{$post->title}}</td>
+                        <td>{{$post->description}}</td>
+                        <td>{{$post->category_id}}</td>
+
+                        {{--Here time converted with strtotime() --}}
+                        <td>{{date('d-m-Y'), strtotime($post->created_at)}}</td>
                         <td>
                             <button type="button" class="btn btn-info">Show</button>
                             <a class="btn btn-primary mx-1">Edit</a>
