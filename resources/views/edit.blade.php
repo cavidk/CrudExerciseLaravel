@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <h1 class="mb-3" style="font-family: Calibri,fantasy">Add your next post below</h1>
+    <h1 class="mb-3" style="font-family: Calibri,fantasy">Edit post at below</h1>
     <div>
         <div class="card"></div>
         <div class="main-content md-6">
@@ -24,6 +24,7 @@
                         <form action="">
                             <div class="card-body"></div>
                             <div class="form-group">
+                                <img src="{{Storage::disk('public')->url($post->image)}}" style="width: 70px" alt="">
                                 <label for="" class="form-label">Image</label>
                                 <input type="file" class="form-control" style="width: 200%">
                             </div>

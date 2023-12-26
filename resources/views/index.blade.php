@@ -44,7 +44,7 @@
                         <td>{{date('d-m-Y'), strtotime($post->created_at)}}</td>
                         <td>
                             <button type="button" class="btn btn-info">Show</button>
-                            <a class="btn btn-primary mx-1">Edit</a>
+                            <a class="btn btn-primary mx-1" href="{{route('posts.edit',$post->id)}}">Edit</a>
                             <button type="button" class="btn btn-danger">Delete</button>
                         </td>
                     </tr>
