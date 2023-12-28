@@ -20,31 +20,39 @@
                     </div>
 
                     <div class="col-md-7 d-flex justify-content-end">
-                        <div class="card-body"></div>
+                        <div class="card-body">
+                            <img class="mt-5 m-lg-5" src="{{Storage::disk('public')->url($post->image)}}"
+                                 style="width: 170px" alt="">
+                        </div>
                         <form action="">
                             <div class="card-body"></div>
                             <div class="form-group">
-                                <img src="{{Storage::disk('public')->url($post->image)}}" style="width: 70px" alt="">
+
                                 <label for="" class="form-label">Image</label>
                                 <input type="file" class="form-control" style="width: 200%">
                             </div>
-                            <div class="form-group">
+                            <div class="form-group mt-3">
                                 <label for="" class="form-label">Title</label>
-                                <input type="title" class="form-control" style="width: 200%">
+                                <input type="title" class="form-control" style="width: 200%" value="{{$post->title}}">
                             </div>
-                            <div class="form-group">
-                                <label for="" class="form-label">Title</label>
+                            <div class="form-group mt-3">
+                                <label for="" class="form-label">Category</label>
                                 <select name="" class="form-control" style="width: 200%">
-                                    <option value="">Test1</option>
-                                    <option value="">Test2</option>
-                                    <option value="">Test3</option>
-                                    <option value="">Tes4</option>
+                                    <option>Select</option>
+                                    @foreach($categories as $category)
+                                        <option
+                                            {{$category->id == $post->category_id ? 'selected' : ''}}
+                                            value="{{$category->id}}">{{$category->name}}
+                                        </option>
+                                    @endforeach
                                 </select>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group mt-3">
                                 <label for="" class="form-label">Description</label>
-                                <textarea name="" id="" cols="40" rows="5" class="form-control"
-                                          placeholder="add description here"></textarea>
+                                <textarea
+                                    cols="40" rows="5" class="form-control" placeholder="add description">
+                                     {{$post->description}}
+                                </textarea>
                             </div>
                             <div class="col-md-20 d-flex justify-content-center mt-3 mb-2">
                                 <button class="btn btn-primary" type="submit">Submit</button>
