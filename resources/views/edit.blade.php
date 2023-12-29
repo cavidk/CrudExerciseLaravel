@@ -26,15 +26,17 @@
                         </div>
                         <form action="">
                             <div class="card-body"></div>
-                            <div class="form-group">
 
+                            <div class="form-group">
                                 <label for="" class="form-label">Image</label>
                                 <input type="file" class="form-control" style="width: 200%">
                             </div>
+
                             <div class="form-group mt-3">
                                 <label for="" class="form-label">Title</label>
                                 <input type="title" class="form-control" style="width: 200%" value="{{$post->title}}">
                             </div>
+
                             <div class="form-group mt-3">
                                 <label for="" class="form-label">Category</label>
                                 <select name="" class="form-control" style="width: 200%">
@@ -47,14 +49,13 @@
                                     @endforeach
                                 </select>
                             </div>
+
                             <div class="form-group mt-3">
-                                <label for="" class="form-label">Description</label>
-                                <textarea
-                                    cols="40" rows="5" class="form-control" placeholder="add description">
-                                     {{$post->description}}
-                                </textarea>
+                                <label class="form-label">Description</label>
+                                <textarea cols="40" class="form-control" placeholder="Enter description...">{{$post->description}}</textarea>
                             </div>
-                            <div class="col-md-20 d-flex justify-content-center mt-3 mb-2">
+
+                            <div class="row-cols-md-3 form-group mt-3 mb-5 justify-content-right">
                                 <button class="btn btn-primary" type="submit">Submit</button>
                             </div>
                         </form>

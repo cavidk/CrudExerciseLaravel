@@ -15,7 +15,7 @@ class PostController extends Controller
     public function index()
     {
         //Here we are fetching all the posts from the database and passing them to the view.
-        $posts =  Post::all();
+        $posts = Post::all();
         return view('index', compact('posts'));
     }
 
@@ -35,20 +35,17 @@ class PostController extends Controller
      */
     public function store(CreatePostRequest $request)
     {
-
         //Here we are uploading the image to the storage folder and getting the path of the image.
-        $fileName = time().'_'. $request->image->getClientOriginalName();
+
+        $fileName = time() . '_' . $request->image->getClientOriginalName();
         $filePath = $request->file('image')->storeAs('uploads', $fileName, 'public');
+        $post = new Post();
 
-        $post = Post::create(
-            $request->validated()
-        );
-
-        //Here we are setting the image property of the post to the path of the image we just uploaded.
-
-        $post->image = '/storage/' . $filePath;
-
-        //Here we are saving the post to the database.
+        $post->title = $request->title;
+        $post->description = $request->description;
+        $post->image = $filePath;
+        $post->category_id = $request->category_id;
+        $post->save();
 
         return redirect()->route('posts.index')->with('success', 'Post created successfully.');
     }
