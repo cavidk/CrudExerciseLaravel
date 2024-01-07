@@ -7,7 +7,19 @@
         <div class="card"></div>
         <div class="main-content md-6">
             <div class="card-body">
-                <div class="card">
+
+           {{--This is the code for the create.blade.php file-catching emtpty field input--}}
+                    @if($errors->any())
+                        <script>
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                html: '{!! implode("<br>", $errors->all()) !!}',
+                            });
+                        </script>
+                    @endif
+
+                    <div class="card">
                     <div class="card-header">
                         <div class="row">
                             <div class="col-md-8">
@@ -25,7 +37,7 @@
                                  style="width: 170px" alt="">
                         </div>
                         <form action="{{route("posts.update", $post->id)}}" method="POST" enctype="multipart/form-data">
-                           @csrf
+                            @csrf
                             @method('PUT')
 
                             <div class="card-body"></div>
@@ -37,7 +49,8 @@
 
                             <div class="form-group mt-3">
                                 <label for="" class="form-label">Title</label>
-                                <input name="title" type="title" class="form-control" style="width: 200%" value="{{$post->title}}">
+                                <input name="title" type="title" class="form-control" style="width: 200%"
+                                       value="{{$post->title}}">
                             </div>
 
                             <div class="form-group mt-3">

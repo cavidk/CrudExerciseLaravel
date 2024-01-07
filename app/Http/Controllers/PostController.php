@@ -71,8 +71,9 @@ class PostController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(CreatePostRequest $request, string $id)
     {
+
         $fileName = time() . '_' . $request->image->getClientOriginalName();
         $filePath = $request->file('image')->storeAs('uploads', $fileName, 'public');
         $post = new Post();
