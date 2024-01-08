@@ -73,11 +73,17 @@ class PostController extends Controller
      */
     public function update(CreatePostRequest $request, string $id)
     {
+        //Here we are updating the post and uploading the image to the storage folder and getting the path of the image.
+        if ($request->hasFile('image')) {
+            $request->validate([
+                'image' => ['required', 'image', 'max:2048'],
+            ]);
+        }
 
         $fileName = time() . '_' . $request->image->getClientOriginalName();
         $filePath = $request->file('image')->storeAs('uploads', $fileName, 'public');
-        $post = new Post();
 
+        $post = Post::findOrFail($id);
         $post->title = $request->title;
         $post->description = $request->description;
         $post->image = $filePath;
