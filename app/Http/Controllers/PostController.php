@@ -102,3 +102,6 @@ class PostController extends Controller
         //
     }
 }
+
+//TODO Next is Show a spesific row (first have to finish update row with eloquent 80.=> 81.)
+
