@@ -2,55 +2,59 @@
 
 @section('content')
 
-    <h1 style="font-family: Calibri,fantasy">This is form index illustrated here</h1>
+    <h1 class="mb-4" style="font-family: Calibri, fantasy">Posts Index</h1>
+
     <div class="main-content mt-6">
         <div class="card">
             <div class="card-header">All Posts</div>
-        </div>
 
-        <div class="mt-3 mb-3">
-            <div class="col-md-15 d-flex justify-content-end">
-                <a class="btn btn-success mx-1" href="{{route("posts.create")}}">Create</a>
-                <button type="button" class="btn btn-warning">Trashed</button>
+            <div class="mt-3 mb-3">
+                <div class="col-md-15 d-flex justify-content-end"> {{-- Adjusted justify-content-end --}}
+                    <a class="btn btn-success mx-2" href="{{ route("posts.create") }}">Create</a>
+                    <button type="button" class="btn btn-warning" style="margin-right: 20px;">Trashed</button>
+                </div>
             </div>
-        </div>
-        <div class="card-body">
-            <table class="table table-striped table-bordered border-dark">
-                <thead style="background: #e2e8f0">
-                <tr>
-                    <th scope="col width: 5%">#</th>
-                    <th scope="col" style="width: 20%">Image</th>
-                    <th scope="col" style="width: 30%">Title</th>
-                    <th scope="col" style="width: 10%">Description</th>
-                    <th scope="col" style="width: 10%">Category</th>
-                    <th scope="col" style="width: 10%">Publish Date</th>
-                    <th scope="col" style="height: 10%">Action</th>
-                </tr>
-                </thead>
-                <tbody>
 
-                {{--Here we will create a post--}}
-                @foreach($posts as $post)
-                    <tr>
-                        <th scope="row">{{$post->id}}</th>
-                        <td>
-                            <img src="{{Storage::disk('public')->url($post->image)}}" width="25%" alt="">
-                        </td>
-                        <td>{{$post->title}}</td>
-                        <td>{{$post->description}}</td>
-                        <td>{{$post->category_id}}</td>
-
-                        {{--Here time converted with strtotime() --}}
-                        <td>{{date('d-m-Y'), strtotime($post->created_at)}}</td>
-                        <td>
-                            <button type="button" class="btn btn-info">Show</button>
-                            <a class="btn btn-primary mx-1" href="{{route('posts.edit',$post->id)}}">Edit</a>
-                            <button type="button" class="btn btn-danger">Delete</button>
-                        </td>
-                    </tr>
-                @endforeach
-                </tbody>
-            </table>
+            <div class="card-body">
+                @if ($posts->isEmpty())
+                    <p>No posts found.</p>
+                @else
+                    <table class="table table-striped table-bordered border-dark">
+                        <thead style="background: #e2e8f0">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col" style="width: 20%">Image</th>
+                            <th scope="col" style="width: 30%">Title</th>
+                            <th scope="col" style="width: 10%">Description</th>
+                            <th scope="col" style="width: 10%">Category</th>
+                            <th scope="col" style="width: 10%">Publish Date</th>
+                            <th scope="col" style="height: 10%">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {{-- Iterate over posts --}}
+                        @foreach($posts as $post)
+                            <tr>
+                                <th scope="row">{{ $post->id }}</th>
+                                <td>
+                                    <img src="{{ Storage::disk('public')->url($post->image) }}" width="25%" alt="">
+                                </td>
+                                <td>{{ $post->title }}</td>
+                                <td>{{ $post->description }}</td>
+                                <td>{{ $post->category_id }}</td>
+                                {{-- Format the date --}}
+                                <td>{{ $post->created_at->format('d-m-Y') }}</td>
+                                <td>
+                                    <a class="btn btn-info btn-sm" href="{{route('posts.show',$post->id)}}">Show</a>
+                                    <a class="btn btn-primary btn-sm mx-1" href="{{ route('posts.edit', $post->id) }}">Edit</a>
+                                    <button type="button" class="btn btn-danger btn-sm">Delete</button>
+                                </td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                @endif
+            </div>
         </div>
     </div>
 @endsection
