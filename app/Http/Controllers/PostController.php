@@ -7,6 +7,8 @@ use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
+
 class PostController extends Controller
 {
     /**
@@ -104,7 +106,35 @@ class PostController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try {
+            $post = Post::findOrFail($id);
+            // Delete the associated image from storage (optional, if you're storing images)
+            Storage::disk('public')->delete($post->image);
+
+            // Delete the post
+            $post->delete();
+
+            return redirect()->route('posts.index')->with('success', 'Post deleted successfully.');
+        } catch (\Exception $e) {
+            // Handle any exceptions if the post is not found or cannot be deleted
+            return redirect()->route('posts.index')->with('error', 'Failed to delete post.');
+        }
+
+    }
+
+    public function trashed(){
+        $posts = Post::onlyTrashed()->get();
+        return view('trashed',compact('posts'));
+    }
+    public function restore(string $id){
+        $post = Post::onlyTrashed()->findOrFail($id);
+        $post->restore();
+        return redirect()->route('posts.index')->with('success', 'Post restored successfully.');
+    }
+    public function forceDelete(string $id){
+        $post = Post::onlyTrashed()->findOrFail($id);
+        $post->forceDelete();
+        return redirect()->route('posts.index')->with('success', 'Post deleted permanently.');
     }
 }
 
