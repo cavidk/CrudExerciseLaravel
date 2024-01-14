@@ -45,8 +45,9 @@
                             <tr>
                                 <th scope="row">{{ $post->id }}</th>
                                 <td>
-                                    <img src="{{ Storage::disk('public')->url($post->image) }}" width="35%" alt="">
+                                    <img src="{{ public_path('public' . $post->image) }}" width="35%" alt="">
                                 </td>
+
                                 <td>{{ $post->title }}</td>
                                 <td>{{ $post->description }}</td>
                                 <td>{{ $post->category_id }}</td>
