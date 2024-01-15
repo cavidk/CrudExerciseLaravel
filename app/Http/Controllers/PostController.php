@@ -109,7 +109,6 @@ class PostController extends Controller
         try {
             $post = Post::findOrFail($id);
             // Delete the associated image from storage (optional, if you're storing images)
-            Storage::disk('public')->delete($post->image);
 
             // Delete the post
             $post->delete();
@@ -122,17 +121,23 @@ class PostController extends Controller
 
     }
 
-    public function trashed(){
+    public function trashed()
+    {
         $posts = Post::onlyTrashed()->get();
-        return view('trashed',compact('posts'));
+        return view('trashed', compact('posts'));
     }
-    public function restore(string $id){
+
+    public function restore($id)
+    {
         $post = Post::onlyTrashed()->findOrFail($id);
         $post->restore();
-        return redirect()->route('posts.index')->with('success', 'Post restored successfully.');
+        return redirect()->back()->with('success', 'Post restored successfully.');
     }
-    public function forceDelete(string $id){
+
+    public function forceDelete(string $id)
+    {
         $post = Post::onlyTrashed()->findOrFail($id);
+        Storage::disk('public')->delete($post->image);
         $post->forceDelete();
         return redirect()->route('posts.index')->with('success', 'Post deleted permanently.');
     }
