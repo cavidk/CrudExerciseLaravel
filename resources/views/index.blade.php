@@ -28,7 +28,7 @@
                             <th scope="col" style="width: 10%">Description</th>
                             <th scope="col" style="width: 10%">Category</th>
                             <th scope="col" style="width: 10%">Publish Date</th>
-                            <th scope="col" style="height: 10%">Action</th>
+                            <th scope="col" style="height: 40%">Action</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -37,7 +37,7 @@
                             <tr>
                                 <th scope="row">{{ $post->id }}</th>
                                 <td>
-                                    <img src="{{ Storage::disk('public')->url($post->image) }}" width=35%" alt="">
+                                    <img src="{{ Storage::disk('public')->url($post->image) }}" width=30%" alt="">
                                 </td>
                                 <td>{{ $post->title }}</td>
                                 <td>{{ $post->description }}</td>
