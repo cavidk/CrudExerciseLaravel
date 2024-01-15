@@ -36,7 +36,7 @@
                             <th scope="col" style="width: 10%">Description</th>
                             <th scope="col" style="width: 10%">Category</th>
                             <th scope="col" style="width: 10%">Deleted At</th>
-                            <th scope="col" style="height: 10%">Action</th>
+                            <th scope="col" style="width: 40%">Action</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -45,16 +45,21 @@
                             <tr>
                                 <th scope="row">{{ $post->id }}</th>
                                 <td>
-                                    <img src="{{ public_path('public' . $post->image) }}" width="35%" alt="">
+                                     <img src="{{ Storage::disk('public')->url($post->image) }}" width=30%" alt="">
+{{--                                    <img src="{{ asset($post->image) }}" width="35%" alt="here">--}}
                                 </td>
-
                                 <td>{{ $post->title }}</td>
                                 <td>{{ $post->description }}</td>
                                 <td>{{ $post->category_id }}</td>
                                 {{-- Format the date --}}
                                 <td>{{ $post->deleted_at->format('d-m-Y') }}</td>
                                 <td>
-                                    <a class="btn btn-success btn-sm">Restore</a>
+                                    <form action="{{ route('posts.restore', $post->id) }}" method="POST"
+                                          style="display: inline-block">
+                                        @csrf
+                                        @method('POST')
+                                        <button type="submit" class="btn btn-success btn-sm">Restore</button>
+                                    </form>
                                     <form action="{{ route('posts.forceDelete', $post->id) }}" method="POST"
                                           style="display: inline-block">
                                         @csrf
