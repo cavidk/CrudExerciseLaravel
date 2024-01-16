@@ -10,8 +10,8 @@
 
             <div class="mt-2 mb-1">
                 <div class="col-md-15 d-flex justify-content-end"> {{-- Adjusted justify-content-end --}}
-                    <a class="btn btn-success mx-2" href="{{ route("posts.create") }}">Create</a>
-                    <a class="btn btn-warning" href="{{route('posts.trashed')}}" style="margin-right: 20px">Trashed</a>
+                    <a class="btn btn-success mx-2 btn-sm" href="{{ route("posts.create") }}">Create</a>
+                    <a class="btn btn-warning btn-sm"  href="{{route('posts.trashed')}}" style="margin-right: 20px">Trashed</a>
                 </div>
             </div>
 
@@ -24,11 +24,11 @@
                         <tr>
                             <th scope="col">#</th>
                             <th scope="col" style="width: 20%">Image</th>
-                            <th scope="col" style="width: 30%">Title</th>
-                            <th scope="col" style="width: 10%">Description</th>
+                            <th scope="col" style="width: 10%">Title</th>
+                            <th scope="col" style="width: 30%">Description</th>
                             <th scope="col" style="width: 10%">Category</th>
                             <th scope="col" style="width: 10%">Publish Date</th>
-                            <th scope="col" style="height: 40%">Action</th>
+                            <th scope="col" style="width: 15%">Action</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -41,7 +41,8 @@
                                 </td>
                                 <td>{{ $post->title }}</td>
                                 <td>{{ $post->description }}</td>
-                                <td>{{ $post->category_id }}</td>
+                                {{--relation for post->category--}}
+                                <td>{{ $post->category->name}}</td>
                                 {{-- Format the date --}}
                                 <td>{{ $post->created_at->format('d-m-Y') }}</td>
                                 <td>
