@@ -9,13 +9,13 @@
             <div class="card-header">All Posts</div>
 
             <div class="mt-2 mb-1">
-                <div class="col-md-15 d-flex justify-content-end"> {{-- Adjusted justify-content-end --}}
+                <div class="col-md-15 d-flex justify-content-end">
                     <a class="btn btn-success mx-2 btn-sm" href="{{ route("posts.create") }}">Create</a>
-                    <a class="btn btn-warning btn-sm"  href="{{route('posts.trashed')}}" style="margin-right: 20px">Trashed</a>
+                    <a class="btn btn-warning btn-sm" href="{{route('posts.trashed')}}" style="margin-right: 20px">Trashed</a>
                 </div>
             </div>
 
-            <div class="card-body">
+            <div class="card-body text-center"> {{-- Center-align the content --}}
                 @if ($posts->isEmpty())
                     <p>No posts found.</p>
                 @else
@@ -62,6 +62,10 @@
                         @endforeach
                         </tbody>
                     </table>
+                    {{-- Pagination links --}}
+                    <div class="d-flex justify-content-center mt-3">
+                        {{$posts->links()}}
+                    </div>
                 @endif
             </div>
         </div>
