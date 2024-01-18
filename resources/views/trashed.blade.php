@@ -33,6 +33,7 @@
                             <th scope="col">#</th>
                             <th scope="col" style="width: 20%">Image</th>
                             <th scope="col" style="width: 30%">Title</th>
+                            <th scope="col" style="width: 10%">Status</th>
                             <th scope="col" style="width: 10%">Description</th>
                             <th scope="col" style="width: 10%">Category</th>
                             <th scope="col" style="width: 10%">Deleted At</th>
@@ -49,6 +50,7 @@
 {{--                                    <img src="{{ asset($post->image) }}" width="35%" alt="here">--}}
                                 </td>
                                 <td>{{ $post->title }}</td>
+                                <td>{{ $post->status }}</td>
                                 <td>{{ $post->description }}</td>
                                 <td>{{ $post->category_id }}</td>
                                 {{-- Format the date --}}

@@ -27,6 +27,7 @@
                     </div>
                     <div class="col-md-9">
                         <h3><strong>Title:</strong> {{ $post->title }}</h3>
+                        <p><strong>Status:</strong> {{ $post->status }}</p>
                         <p><strong>Description:</strong> {{ $post->description }}</p>
                         <p><strong>Category:</strong> {{ $post->category_id }}</p>
                         <p><strong>Publish Date:</strong> {{ $post->created_at->format('d-m-Y') }}</p>
