@@ -8,18 +8,18 @@
         <div class="main-content md-6">
             <div class="card-body">
 
-           {{--This is the code for the create.blade.php file-catching emtpty field input--}}
-                    @if($errors->any())
-                        <script>
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Oops...',
-                                html: '{!! implode("<br>", $errors->all()) !!}',
-                            });
-                        </script>
-                    @endif
+                {{--This is the code for the create.blade.php file-catching emtpty field input--}}
+                @if($errors->any())
+                    <script>
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            html: '{!! implode("<br>", $errors->all()) !!}',
+                        });
+                    </script>
+                @endif
 
-                    <div class="card">
+                <div class="card">
                     <div class="card-header">
                         <div class="row">
                             <div class="col-md-8">
@@ -27,9 +27,12 @@
                             </div>
                             <div class="col-md-4 d-flex justify-content-end">
                                 <a class="btn btn-primary btn-sm" href="{{ route("posts.index") }}">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="currentColor" class="bi bi-box-arrow-in-left" viewBox="0 0 16 16">
-                                        <path fill-rule="evenodd" d="M10 3.5a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-2a.5.5 0 0 1 1 0v2A1.5 1.5 0 0 1 9.5 14h-8A1.5 1.5 0 0 1 0 12.5v-9A1.5 1.5 0 0 1 1.5 2h8A1.5 1.5 0 0 1 11 3.5v2a.5.5 0 0 1-1 0z"/>
-                                        <path fill-rule="evenodd" d="M4.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H14.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708z"/>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="currentColor"
+                                         class="bi bi-box-arrow-in-left" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd"
+                                              d="M10 3.5a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-2a.5.5 0 0 1 1 0v2A1.5 1.5 0 0 1 9.5 14h-8A1.5 1.5 0 0 1 0 12.5v-9A1.5 1.5 0 0 1 1.5 2h8A1.5 1.5 0 0 1 11 3.5v2a.5.5 0 0 1-1 0z"/>
+                                        <path fill-rule="evenodd"
+                                              d="M4.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H14.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708z"/>
                                     </svg>
                                 </a>
                             </div>
@@ -57,6 +60,20 @@
                                 <input name="title" type="title" class="form-control" style="width: 200%"
                                        value="{{$post->title}}">
                             </div>
+
+                   {{--TODO solve status button action--}}
+
+                            <div class="mb-3">
+                                <label for="status" class="form-label">Select Status</label>
+                                <select class="form-select" name="status" id="status" required>
+                                    <option value="active" {{ $post->status == 'active' ? 'selected' : '' }}>Active
+                                    </option>
+                                    <option value="inactive" {{ $post->status == 'inactive' ? 'selected' : '' }}>
+                                        Inactive
+                                    </option>
+                                </select>
+                            </div>
+
 
                             <div class="form-group mt-3">
                                 <label for="" class="form-label">Category</label>
