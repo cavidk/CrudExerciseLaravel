@@ -141,5 +141,12 @@ class PostController extends Controller
         $post->forceDelete();
         return redirect()->route('posts.index')->with('success', 'Post deleted permanently.');
     }
+    public function updateStatus(Request $request,$id)
+    {
+        $post = Post::findOrFail($id);
+        $post->status = $request->status;
+        $post->save();
+        return redirect()->back()->with('success', 'Post status updated successfully.');
+    }
 }
 

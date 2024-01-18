@@ -25,7 +25,8 @@
                             <th scope="col">#</th>
                             <th scope="col" style="width: 20%">Image</th>
                             <th scope="col" style="width: 10%">Title</th>
-                            <th scope="col" style="width: 30%">Description</th>
+                            <th scope="col" style="width: 10%">Status</th>
+                            <th scope="col" style="width: 20%">Description</th>
                             <th scope="col" style="width: 10%">Category</th>
                             <th scope="col" style="width: 10%">Publish Date</th>
                             <th scope="col" style="width: 15%">Action</th>
@@ -40,6 +41,13 @@
                                     <img src="{{ Storage::disk('public')->url($post->image) }}" width=30%" alt="">
                                 </td>
                                 <td>{{ $post->title }}</td>
+                                <td>
+                                    <button
+                                        class="btn btn-sm {{ $post->status == 'active' ? 'btn-success' : 'btn-danger' }}"
+                                        data-bs-toggle="modal" data-bs-target="#statusModal{{ $post->id }}">
+                                        {{ $post->status }}
+                                    </button>
+                                </td>
                                 <td>{{ $post->description }}</td>
                                 {{--relation for post->category--}}
                                 <td>{{ $post->category->name}}</td>
@@ -70,4 +78,43 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal for Status Update -->
+    @foreach($posts as $post)
+        <div class="modal fade" id="statusModal{{ $post->id }}" tabindex="-1"
+             aria-labelledby="statusModalLabel{{ $post->id }}" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="statusModalLabel{{ $post->id }}">Update Status for Post
+                            #{{ $post->id }}</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="{{ route('posts.updateStatus', $post->id) }}" method="POST">
+                            @csrf
+                            @method('PUT')
+
+                            <div class="mb-3">
+                                <label for="status" class="form-label">Select Status</label>
+                                <select class="form-select" name="status" id="status" required>
+                                    <option value="active" {{ $post->status == 'active' ? 'selected' : '' }}>Active
+                                    </option>
+                                    <option value="inactive" {{ $post->status == 'inactive' ? 'selected' : '' }}>
+                                        Inactive
+                                    </option>
+                                </select>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Save changes</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endforeach
+
 @endsection
