@@ -32,9 +32,9 @@
                         <tr>
                             <th scope="col">#</th>
                             <th scope="col" style="width: 20%">Image</th>
-                            <th scope="col" style="width: 30%">Title</th>
+                            <th scope="col" style="width: 10%">Title</th>
                             <th scope="col" style="width: 10%">Status</th>
-                            <th scope="col" style="width: 10%">Description</th>
+                            <th scope="col" style="width: 20%">Description</th>
                             <th scope="col" style="width: 10%">Category</th>
                             <th scope="col" style="width: 10%">Deleted At</th>
                             <th scope="col" style="width: 40%">Action</th>
@@ -56,7 +56,7 @@
                                 {{-- Format the date --}}
                                 <td>{{ $post->deleted_at->format('d-m-Y') }}</td>
                                 <td>
-                                    <form action="{{ route('posts.restore', $post->id) }}" method="POST"
+                                    <form action="{{ route('posts.restore', $post->id) }}" method="PUT"
                                           style="display: inline-block">
                                         @csrf
                                         @method('POST')
