@@ -16,8 +16,13 @@ class PostController extends Controller
      */
     public function index()
     {
+
+        $search = request()->query('search');
+
         //Here we are fetching all the posts from the database and passing them to the view.
-        $posts = Post::paginate(5);
+        $posts = Post::when($search, function ($query, $search) {
+            return $query->where('title', 'like', '%' . $search . '%');
+        })->paginate(5);
         return view('index', compact('posts'));
     }
 
