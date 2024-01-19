@@ -2,6 +2,17 @@
 
 @section('content')
 
+<div class="d-flex justify-content-end mt-3">
+    <div class="row col-md-6" style="width: 25%">
+        <form action="{{ route('posts.index') }}" method="GET" class="form-inline">
+            <div class="form-group mb-2">
+                <input type="text" name="search" class="form-control" placeholder="Search">
+            </div>
+            <button type="submit" class="btn btn-primary btn-sm ml-2">Search</button>
+        </form>
+    </div>
+</div>
+
     <h1 class="mb-4" style="font-family: Calibri, fantasy">Posts Index</h1>
 
     <div class="main-content mt-6">
