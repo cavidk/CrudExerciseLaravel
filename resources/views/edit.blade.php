@@ -61,11 +61,11 @@
                                        value="{{$post->title}}">
                             </div>
 
-                   {{--TODO solve status button action--}}
-
-                            <div class="mb-3">
-                                <label for="status" class="form-label">Select Status</label>
-                                <select class="form-select" name="status" id="status" required>
+                            <div class="form-group mt-3">
+                                <label for="" class="form-label">Status</label>
+                                <select
+                                    class="form-select @if($post->status == 'active') text-success @elseif($post->status == 'inactive') text-success @endif"
+                                    name="status" style="width: 50%">
                                     <option value="active" {{ $post->status == 'active' ? 'selected' : '' }}>Active
                                     </option>
                                     <option value="inactive" {{ $post->status == 'inactive' ? 'selected' : '' }}>
