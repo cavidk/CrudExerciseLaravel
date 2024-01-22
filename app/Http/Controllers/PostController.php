@@ -148,6 +148,7 @@ class PostController extends Controller
     }
     public function updateStatus(Request $request,$id)
     {
+
         $post = Post::findOrFail($id);
         $post->status = $request->status;
         $post->save();
