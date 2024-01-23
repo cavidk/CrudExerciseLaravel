@@ -18,20 +18,32 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function (){
-    return view('dashboard');
+//Route::group(["middleware" => "authCheck"], function () {
+//    Route::get('/dashboard', function () {
+//        return view('dashboard');
+//    })->middleware(['auth', 'checkCountry']);
+//
+//    Route::get('/profile', function () {
+//        return view('profile');
+//    });
+//});
+
+
+Route::prefix('/posts')->group(function () {
+    Route::get('/trash', [PostController::class, 'trashed'])->name('posts.trashed');
+    Route::get('/{id}/restore', [PostController::class, 'restore'])->name('posts.restore');
+    Route::put('/{id}/update-status', [PostController::class, 'updateStatus'])->name('posts.updateStatus');
+    Route::delete('/{id}/force-delete', [PostController::class, 'forceDelete'])->name('posts.forceDelete');
 });
 
-Route::get('/profile', function (){
-    return view('profile');
-});
-
-Route::get('/posts/trash',[PostController::class,'trashed'])->name('posts.trashed');
-Route::get('/posts/{id}/restore', [PostController::class, 'restore'])->name('posts.restore');
-Route::put('/posts/{id}/update-status', [PostController::class, 'updateStatus'])->name('posts.updateStatus');
-Route::delete('/posts/{id}/force-delete', [PostController::class, 'forceDelete'])->name('posts.forceDelete');
 Route::resource('posts', PostController::class);
 
 Route::get('/unavailable', function () {
     return view('unavailable');
 })->name('unavailable');
+
+Route::prefix('admin')->group(function () {
+    Route::get('/dashboard', function () {
+        return view('admin.dashboard');
+    });
+})->middleware(['auth', 'checkCountry']);
