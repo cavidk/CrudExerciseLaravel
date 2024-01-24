@@ -18,16 +18,15 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-//Route::group(["middleware" => "authCheck"], function () {
-//    Route::get('/dashboard', function () {
-//        return view('dashboard');
-//    })->middleware(['auth', 'checkCountry']);
-//
-//    Route::get('/profile', function () {
-//        return view('profile');
-//    });
-//});
+Route::group(["middleware"=>"authCheck"], function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->middleware('authCheck');
 
+    Route::get('/profile', function () {
+        return view('profile');
+    })->middleware('authCheck');
+});
 
 Route::prefix('/posts')->group(function () {
     Route::get('/trash', [PostController::class, 'trashed'])->name('posts.trashed');
@@ -42,8 +41,4 @@ Route::get('/unavailable', function () {
     return view('unavailable');
 })->name('unavailable');
 
-Route::prefix('admin')->group(function () {
-    Route::get('/dashboard', function () {
-        return view('admin.dashboard');
-    });
-})->middleware(['auth', 'checkCountry']);
+
