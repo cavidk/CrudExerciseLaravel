@@ -18,14 +18,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::group(["middleware"=>"authCheck"], function () {
+Route::group([], function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
-    })->middleware('authCheck');
+    });
 
     Route::get('/profile', function () {
         return view('profile');
-    })->middleware('authCheck');
+    });
 });
 
 Route::prefix('/posts')->group(function () {
@@ -40,5 +40,9 @@ Route::resource('posts', PostController::class);
 Route::get('/unavailable', function () {
     return view('unavailable');
 })->name('unavailable');
+
+Route::get('contact', function () {
+    return view('contact');
+});
 
 

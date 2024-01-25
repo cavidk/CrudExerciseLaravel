@@ -1,17 +1,25 @@
 @extends('layouts.master')
 
 @section('content')
-
-<div class="d-flex justify-content-end mt-3">
-    <div class="row col-md-6" style="width: 25%">
-        <form action="{{ route('posts.index') }}" method="GET" class="form-inline">
-            <div class="form-group mb-2">
-                <input type="text" name="search" class="form-control" placeholder="Search">
-            </div>
-            <button type="submit" class="btn btn-primary btn-sm ml-2">Search</button>
-        </form>
+    <div class="d-flex justify-content-end mt-3">
+        <div class="row col-md-6" style="width: 23%">
+            <form action="{{ route('posts.index') }}" method="GET" class="form-inline">
+                <div class="input-group mb-2">
+                    <input type="text" name="search" class="form-control" placeholder="Search a post"
+                           aria-label="Search" aria-describedby="searchIcon">
+                    <button type="submit" class="btn btn-primary btn-sm ml-2" id="searchIcon">
+                        <i class="fa fa-search">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor"
+                                 class="bi bi-search" viewBox="0 0 16 16">
+                                <path
+                                    d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+                            </svg>
+                        </i> <!-- Assuming you are using Bootstrap Icons (bi) library -->
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
-</div>
 
     <h1 class="mb-4" style="font-family: Calibri, fantasy">Posts Index</h1>
 
@@ -30,7 +38,7 @@
                 @if ($posts->isEmpty())
                     <p>No posts found.</p>
                 @else
-                    <table class="table table-striped table-bordered border-dark">
+                    <table class="table table-striped table-bordered border-3">
                         <thead style="background: #e2e8f0">
                         <tr>
                             <th scope="col">#</th>
@@ -127,5 +135,4 @@
             </div>
         </div>
     @endforeach
-
 @endsection

@@ -18,7 +18,7 @@ class Kernel extends HttpKernel
 
         \App\Http\Middleware\TrustProxies::class,
 //        \App\Http\Middleware\CheckCountry::class,
-        \App\Http\Middleware\AuthCheck::class,
+//        \App\Http\Middleware\AuthCheck::class,
         \Illuminate\Http\Middleware\HandleCors::class,
         \App\Http\Middleware\PreventRequestsDuringMaintenance::class,
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
@@ -71,6 +71,6 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
 //        'checkCountry' => \App\Http\Middleware\CheckCountry::class,
-        'authCheck' => \App\Http\Middleware\AuthCheck::class,
+//        'authCheck' => \App\Http\Middleware\AuthCheck::class,
     ];
 }

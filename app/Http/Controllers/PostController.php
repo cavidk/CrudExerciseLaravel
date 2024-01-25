@@ -18,7 +18,7 @@ class PostController extends Controller
     public function __construct()
     {
 
-        $this->middleware('authCheck')->except(['index', 'show']);
+//        $this->middleware('authCheck')->except(['index', 'show']);
         //$this->>middleware('authCheck2')->only(['index', 'show']);
     }
 
