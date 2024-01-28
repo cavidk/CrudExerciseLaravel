@@ -4,4 +4,5 @@
 
     <x-button />
     <x-forms.button />
+    <x-input-field />
 </div>
