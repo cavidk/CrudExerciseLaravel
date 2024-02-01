@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\PostController;
+use App\Mail\OrderShipped;
 use App\Models\Post;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
@@ -51,10 +52,13 @@ Route::get('contact', function () {
 
 //create a root for send-mail
 Route::get('send-mail', function(){
-    Mail::raw('Hello World', function($message){
+    /*Mail::raw('Hello World', function($message){
         $message->to('test@testgmail.com')->subject('noreply');
 });
+    dd('Mail Send Successfully');*/
+    Mail::send(new OrderShipped());
     dd('Mail Send Successfully');
+
 });
 
 
