@@ -3,6 +3,7 @@
                 <div class="card-body">
                     <h4>{{$title}}</h4>
                     <p>{{$description}}</p>
+                    {{$slot}}
                 </div>
             </div>
         </div>
