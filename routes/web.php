@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\PostController;
 use App\Models\Post;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -46,6 +47,14 @@ Route::get('contact', function () {
 
     $posts = Post::all();
     return view('contact', compact('posts'));
+});
+
+//create a root for send-mail
+Route::get('send-mail', function(){
+    Mail::raw('Hello World', function($message){
+        $message->to('test@testgmail.com')->subject('noreply');
+});
+    dd('Mail Send Successfully');
 });
 
 

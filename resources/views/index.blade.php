@@ -21,9 +21,12 @@
         </div>
     </div>
 
-    <h1 class="mb-4" style="font-family: Calibri, fantasy">Posts Index</h1>
-
-    <div class="main-content mt-6">
+    <h1 style="font-family: Calibri, fantasy">Posts Index</h1>
+        <div class="main-content mt-6">
+            <!-- "Send us a mail" button -->
+            <div class="d-flex justify-content-end mb-3" style="margin-right: 5px">
+                <a href="mailto:info@example.com" class="btn btn-outline-info btn-sm">Send us a mail</a>
+            </div>
         <div class="card">
             <div class="card-header">All Posts</div>
 
