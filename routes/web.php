@@ -3,6 +3,7 @@
 use App\Http\Controllers\PostController;
 use App\Mail\OrderShipped;
 use App\Models\Post;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
@@ -51,7 +52,7 @@ Route::get('contact', function () {
 });
 
 //create a root for send-mail
-Route::get('send-mail', function(){
+Route::get('send-mail', function () {
     /*Mail::raw('Hello World', function($message){
         $message->to('test@testgmail.com')->subject('noreply');
 });
@@ -60,5 +61,34 @@ Route::get('send-mail', function(){
     dd('Mail Send Successfully');
 
 });
+
+
+//session routes
+
+Route::get('get-session', function (Request $request) {
+
+    return cache()->get('name');
+    //$data = $request->session()->all();
+
+    //get token
+    $data = $request->session()->all();
+
+    dd($data);
+});
+
+
+Route::get('save-session', function (Request $request) {
+//    $request->session()->put('name', 'John Doe');
+//    $request->session()->put('email', 'johndoe@gmail.com');
+//    return redirect('get-session');
+    //same cache
+    cache()->put('name', 'John Doe', 60);
+    cache()->put('email', 'johndoe@gmail.com');
+    return redirect('get-session');
+});
+
+//Route::get('show-session-data', function(){
+//    dd(session()->all());
+//});
 
 
