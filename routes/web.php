@@ -67,7 +67,7 @@ Route::get('send-mail', function () {
 
 Route::get('get-session', function (Request $request) {
 
-    return cache()->get('name');
+//    return cache()->get('name');
     //$data = $request->session()->all();
 
     //get token
@@ -78,13 +78,20 @@ Route::get('get-session', function (Request $request) {
 
 
 Route::get('save-session', function (Request $request) {
-//    $request->session()->put('name', 'John Doe');
-//    $request->session()->put('email', 'johndoe@gmail.com');
-//    return redirect('get-session');
-    //same cache
+   /* $request->session()->put('name', 'John Doe');
+    $request->session()->put('email', 'johndoe@gmail.com');
+    return redirect('get-session');*/
+
+    //request session as an array
+    $request->session()->put(['user_status' => 'logged_in']);
+
+    return redirect('get-session');
+
+
+/*    same cache
     cache()->put('name', 'John Doe', 60);
     cache()->put('email', 'johndoe@gmail.com');
-    return redirect('get-session');
+    return redirect('get-session');*/
 });
 
 //Route::get('show-session-data', function(){
