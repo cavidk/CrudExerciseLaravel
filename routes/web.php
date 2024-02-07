@@ -62,40 +62,41 @@ Route::get('send-mail', function () {
 
 });
 
-
 //session routes
 
 Route::get('get-session', function (Request $request) {
 
 //    return cache()->get('name');
-    //$data = $request->session()->all();
-
-    //get token
     $data = $request->session()->all();
-
     dd($data);
 });
 
 
 Route::get('save-session', function (Request $request) {
-   /* $request->session()->put('name', 'John Doe');
+    $request->session()->put('name', 'John Doe');
     $request->session()->put('email', 'johndoe@gmail.com');
-    return redirect('get-session');*/
-
-    //request session as an array
-    $request->session()->put(['user_status' => 'logged_in']);
-
     return redirect('get-session');
 
-
-/*    same cache
-    cache()->put('name', 'John Doe', 60);
-    cache()->put('email', 'johndoe@gmail.com');
-    return redirect('get-session');*/
 });
 
-//Route::get('show-session-data', function(){
-//    dd(session()->all());
-//});
+/*Route::get('show-session-data', function(){
+    request()->session()->all();
+    return redirect('get-session');
+});*/
+
+
+//delete data from session
+Route::get('destroy-session', function (Request $request) {
+//    $request->session()->forget('user_id');
+    //flush
+    session()->flush();
+    $request->session()->flush();
+    return redirect('get-session');
+});
+
+Route::get('flash-session', function (Request $request) {
+    $request->session()->flash('status', 'true');
+    return redirect('get-session');
+});
 
 

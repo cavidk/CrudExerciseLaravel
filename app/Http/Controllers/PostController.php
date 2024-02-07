@@ -6,6 +6,7 @@ use App\Http\Requests\CreatePostRequest;
 use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
@@ -26,13 +27,18 @@ class PostController extends Controller
     public function index()
     {
 
-        $search = request()->query('search');
+        $posts = Cache::remember('posts', 3, function () {
+            return Post::with('category')->latest()->paginate(5);
+        });
+        return view('index', compact('posts'));
+
+        /*$search = request()->query('search');
 
         //Here we are fetching all the posts from the database and passing them to the view.
         $posts = Post::when($search, function ($query, $search) {
             return $query->where('title', 'like', '%' . $search . '%');
         })->paginate(5);
-        return view('index', compact('posts'));
+        return view('index', compact('posts'));*/
     }
 
     /**
