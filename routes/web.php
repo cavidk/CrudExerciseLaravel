@@ -1,9 +1,9 @@
 <?php
 
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\ProfileController;
 use App\Mail\OrderShipped;
 use App\Models\Post;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
@@ -22,14 +22,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::group([], function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    });
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
 
-    Route::get('/profile', function () {
-        return view('profile');
-    });
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
 Route::prefix('/posts')->group(function () {
@@ -62,41 +62,5 @@ Route::get('send-mail', function () {
 
 });
 
-//session routes
 
-Route::get('get-session', function (Request $request) {
-
-//    return cache()->get('name');
-    $data = $request->session()->all();
-    dd($data);
-});
-
-
-Route::get('save-session', function (Request $request) {
-    $request->session()->put('name', 'John Doe');
-    $request->session()->put('email', 'johndoe@gmail.com');
-    return redirect('get-session');
-
-});
-
-/*Route::get('show-session-data', function(){
-    request()->session()->all();
-    return redirect('get-session');
-});*/
-
-
-//delete data from session
-Route::get('destroy-session', function (Request $request) {
-//    $request->session()->forget('user_id');
-    //flush
-    session()->flush();
-    $request->session()->flush();
-    return redirect('get-session');
-});
-
-Route::get('flash-session', function (Request $request) {
-    $request->session()->flash('status', 'true');
-    return redirect('get-session');
-});
-
-
+require __DIR__.'/auth.php';

@@ -118,7 +118,6 @@ class PostController extends Controller
         $post->save();
 
         return redirect()->route('posts.index')->with('success', 'Post created successfully.');
-
     }
 
     /**
