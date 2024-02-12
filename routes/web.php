@@ -4,6 +4,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use App\Mail\OrderShipped;
 use App\Models\Post;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
@@ -41,6 +42,13 @@ Route::prefix('/posts')->group(function () {
 
 Route::resource('posts', PostController::class);
 
+    //create a route for user-data
+Route::get('user-data', function () {
+    //return the authenticated user
+    return Auth::user();
+});
+
+
 Route::get('/unavailable', function () {
     return view('unavailable');
 })->name('unavailable');
@@ -53,14 +61,10 @@ Route::get('contact', function () {
 
 //create a root for send-mail
 Route::get('send-mail', function () {
-    /*Mail::raw('Hello World', function($message){
-        $message->to('test@testgmail.com')->subject('noreply');
-});
-    dd('Mail Send Successfully');*/
     Mail::send(new OrderShipped());
     dd('Mail Send Successfully');
 
 });
 
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
