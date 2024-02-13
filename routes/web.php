@@ -33,28 +33,16 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::prefix('/posts')->group(function () {
-    Route::get('/trash', [PostController::class, 'trashed'])->name('posts.trashed');
-    Route::get('/{id}/restore', [PostController::class, 'restore'])->name('posts.restore');
-    Route::put('/{id}/update-status', [PostController::class, 'updateStatus'])->name('posts.updateStatus');
-    Route::delete('/{id}/force-delete', [PostController::class, 'forceDelete'])->name('posts.forceDelete');
-});
-
-Route::resource('posts', PostController::class);
-
-    //create a route for user-data
+//create a route for user-data
 Route::get('user-data', function () {
-    //return the authenticated user
     return Auth::user();
 });
-
 
 Route::get('/unavailable', function () {
     return view('unavailable');
 })->name('unavailable');
 
 Route::get('contact', function () {
-
     $posts = Post::all();
     return view('contact', compact('posts'));
 });
@@ -63,8 +51,15 @@ Route::get('contact', function () {
 Route::get('send-mail', function () {
     Mail::send(new OrderShipped());
     dd('Mail Send Successfully');
-
 });
 
-
 require __DIR__ . '/auth.php';
+
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('/posts/trash', [PostController::class, 'trashed'])->name('posts.trashed');
+    Route::get('/posts/{id}/restore', [PostController::class, 'restore'])->name('posts.restore');
+    Route::put('/posts/{id}/update-status', [PostController::class, 'updateStatus'])->name('posts.updateStatus');
+    Route::delete('/posts/{id}/force-delete', [PostController::class, 'forceDelete'])->name('posts.forceDelete');
+
+    Route::resource('posts', PostController::class);
+});
