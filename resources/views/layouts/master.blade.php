@@ -16,7 +16,6 @@
             @csrf
             <button type="submit" class="btn btn-sm btn-primary">Logout</button>
         </form>
-
     </div>
 </nav>
 

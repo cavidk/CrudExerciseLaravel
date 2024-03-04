@@ -47,6 +47,7 @@ class PostController extends Controller
     public function create()
     {
         //Here we are fetching all the categories from the database and passing them to the view.
+        $this->authorize('create_post');
         $categories = Category::all();
         return view('create', compact('categories'));
 
@@ -88,6 +89,7 @@ class PostController extends Controller
     public function edit(string $id)
     {
         $post = Post::findOrFail($id);
+        $this->authorize('edit_post', $post);
         $categories = Category::all();
         return view("edit", compact('post', 'categories'));
     }
@@ -126,6 +128,7 @@ class PostController extends Controller
     public function destroy(string $id)
     {
         try {
+            $this->authorize('delete_post');
             $post = Post::findOrFail($id);
             // Delete the associated image from storage (optional, if you're storing images)
 
