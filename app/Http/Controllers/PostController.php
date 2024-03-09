@@ -88,8 +88,8 @@ class PostController extends Controller
      */
     public function edit(string $id)
     {
+        $this->authorize('edit_post');
         $post = Post::findOrFail($id);
-        $this->authorize('edit_post', $post);
         $categories = Category::all();
         return view("edit", compact('post', 'categories'));
     }
@@ -99,6 +99,9 @@ class PostController extends Controller
      */
     public function update(CreatePostRequest $request, string $id)
     {
+
+        //authorize the user
+        $this->authorize('edit_post');
 
         //Here we are updating the post and uploading the image to the storage folder and getting the path of the image.
         if ($request->hasFile('image')) {
@@ -127,6 +130,9 @@ class PostController extends Controller
      */
     public function destroy(string $id)
     {
+        //authorize the user
+        $this->authorize('delete_post');
+
         try {
             $this->authorize('delete_post');
             $post = Post::findOrFail($id);
@@ -163,7 +169,8 @@ class PostController extends Controller
         $post->forceDelete();
         return redirect()->route('posts.index')->with('success', 'Post deleted permanently.');
     }
-    public function updateStatus(Request $request,$id)
+
+    public function updateStatus(Request $request, $id)
     {
 
         $post = Post::findOrFail($id);

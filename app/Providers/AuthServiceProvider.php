@@ -29,17 +29,17 @@ class AuthServiceProvider extends ServiceProvider
          *3.delete_post
          */
 
-        Gate::define('create_post', function ($user) {
+        (new \Illuminate\Auth\Access\Gate)->define('create_post', function ($user) {
             return Auth::user()->is_admin;
         });
 
         //add here edit_post
-        Gate::define('edit_post', function ($user) {
+        (new \Illuminate\Auth\Access\Gate)->define('edit_post', function ($user) {
             return Auth::user()->is_admin;
         });
 
         //add here delete_post
-        Gate::define('delete_post', function ($user) {
+        (new \Illuminate\Auth\Access\Gate)->define('delete_post', function ($user) {
             return Auth::user()->is_admin;
         });
 
