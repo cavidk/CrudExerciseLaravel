@@ -151,12 +151,14 @@ class PostController extends Controller
 
     public function trashed()
     {
+        $this->authorize('view_trashed');
         $posts = Post::onlyTrashed()->get();
         return view('trashed', compact('posts'));
     }
 
     public function restore($id)
     {
+        $this->authorize('restore_post');
         $post = Post::onlyTrashed()->findOrFail($id);
         $post->restore();
         return redirect()->back()->with('success', 'Post restored successfully.');
@@ -164,6 +166,7 @@ class PostController extends Controller
 
     public function forceDelete(string $id)
     {
+        $this->authorize('force_delete_post');
         $post = Post::onlyTrashed()->findOrFail($id);
         Storage::disk('public')->delete($post->image);
         $post->forceDelete();
@@ -172,7 +175,7 @@ class PostController extends Controller
 
     public function updateStatus(Request $request, $id)
     {
-
+        $this->authorize('update_status');
         $post = Post::findOrFail($id);
         $post->status = $request->status;
         $post->save();
