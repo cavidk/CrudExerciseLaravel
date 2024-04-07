@@ -23,7 +23,6 @@ class PostController extends Controller
         //$this->>middleware('authCheck2')->only(['index', 'show']);
     }
 
-
     public function index()
     {
 
@@ -114,6 +113,7 @@ class PostController extends Controller
 
 //            File::delete(public_path('storage/' . $post->image));
         }
+
         $post = Post::findOrFail($id);
 
         $post->title = $request->title;
@@ -169,6 +169,7 @@ class PostController extends Controller
         $this->authorize('force_delete_post');
         $post = Post::onlyTrashed()->findOrFail($id);
         Storage::disk('public')->delete($post->image);
+
         $post->forceDelete();
         return redirect()->route('posts.index')->with('success', 'Post deleted permanently.');
     }
