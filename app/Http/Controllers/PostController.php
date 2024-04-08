@@ -58,7 +58,7 @@ class PostController extends Controller
     public function store(CreatePostRequest $request)
     {
         //Here we are uploading the image to the storage folder and getting the path of the image.
-
+        $this->authorize('create_post');
         $fileName = time() . '_' . $request->image->getClientOriginalName();
         $filePath = $request->file('image')->storeAs('uploads', $fileName, 'public');
         $post = new Post();
@@ -151,14 +151,14 @@ class PostController extends Controller
 
     public function trashed()
     {
-        $this->authorize('view_trashed');
+        $this->authorize('delete_post');
         $posts = Post::onlyTrashed()->get();
         return view('trashed', compact('posts'));
     }
 
     public function restore($id)
     {
-        $this->authorize('restore_post');
+        $this->authorize('delete_post');
         $post = Post::onlyTrashed()->findOrFail($id);
         $post->restore();
         return redirect()->back()->with('success', 'Post restored successfully.');
@@ -166,7 +166,7 @@ class PostController extends Controller
 
     public function forceDelete(string $id)
     {
-        $this->authorize('force_delete_post');
+        $this->authorize('delete_post');
         $post = Post::onlyTrashed()->findOrFail($id);
         Storage::disk('public')->delete($post->image);
 
@@ -176,7 +176,7 @@ class PostController extends Controller
 
     public function updateStatus(Request $request, $id)
     {
-        $this->authorize('update_status');
+        $this->authorize('edit_post');
         $post = Post::findOrFail($id);
         $post->status = $request->status;
         $post->save();
