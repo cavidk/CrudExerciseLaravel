@@ -46,7 +46,7 @@ class PostController extends Controller
     public function create()
     {
         //Here we are fetching all the categories from the database and passing them to the view.
-        $this->authorize('create_post');
+        $this->authorize('create_post', Post::class);
         $categories = Category::all();
         return view('create', compact('categories'));
 
@@ -58,7 +58,7 @@ class PostController extends Controller
     public function store(CreatePostRequest $request)
     {
         //Here we are uploading the image to the storage folder and getting the path of the image.
-        $this->authorize('create_post');
+        $this->authorize('create_post', Post::class);
         $fileName = time() . '_' . $request->image->getClientOriginalName();
         $filePath = $request->file('image')->storeAs('uploads', $fileName, 'public');
         $post = new Post();
@@ -87,8 +87,8 @@ class PostController extends Controller
      */
     public function edit(string $id)
     {
-        $this->authorize('edit_post');
         $post = Post::findOrFail($id);
+        $this->authorize('edit_post', Post::class);
         $categories = Category::all();
         return view("edit", compact('post', 'categories'));
     }
@@ -100,7 +100,7 @@ class PostController extends Controller
     {
 
         //authorize the user
-        $this->authorize('edit_post');
+        $this->authorize('edit_post', Post::class);
 
         //Here we are updating the post and uploading the image to the storage folder and getting the path of the image.
         if ($request->hasFile('image')) {
@@ -131,12 +131,11 @@ class PostController extends Controller
     public function destroy(string $id)
     {
         //authorize the user
-        $this->authorize('delete_post');
+//        $this->authorize('delete_post', Post::class);
 
         try {
-            $this->authorize('delete_post');
             $post = Post::findOrFail($id);
-            // Delete the associated image from storage (optional, if you're storing images)
+            $this->authorize('delete_post', Post::class);
 
             // Delete the post
             $post->delete();

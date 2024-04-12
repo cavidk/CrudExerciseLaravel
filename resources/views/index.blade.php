@@ -22,18 +22,20 @@
     </div>
 
     <h1 style="font-family: Calibri, fantasy">Posts Index</h1>
-        <div class="main-content mt-6">
-            <!-- "Send us a mail" button -->
-            <div class="d-flex justify-content-end mb-3" style="margin-right: 5px">
-                <a href="mailto:info@example.com" class="btn btn-outline-info btn-sm">Send us a mail</a>
-            </div>
+    <div class="main-content mt-6">
+        <!-- "Send us a mail" button -->
+        <div class="d-flex justify-content-end mb-3" style="margin-right: 5px">
+            <a href="mailto:info@example.com" class="btn btn-outline-info btn-sm">Send us a mail</a>
+        </div>
         <div class="card">
             <div class="card-header">All Posts</div>
 
             <div class="mt-2 mb-1">
                 <div class="col-md-15 d-flex justify-content-end">
-                    <a class="btn btn-success mx-2 btn-sm" href="{{ route("posts.create") }}">Create</a>
-                    <a class="btn btn-warning btn-sm" href="{{route('posts.trashed')}}" style="margin-right: 20px">Trashed</a>
+                    @can('create', App\Models\Post::class)
+                        <a class="btn btn-success mx-2 btn-sm" href="{{ route("posts.create") }}">Create</a>
+                        <a class="btn btn-warning btn-sm" href="{{route('posts.trashed')}}" style="margin-right: 20px">Trashed</a>
+                    @endcan
                 </div>
             </div>
 
@@ -77,7 +79,10 @@
                                 <td>{{ $post->created_at->format('d-m-Y') }}</td>
                                 <td>
                                     <a class="btn btn-info btn-sm" href="{{route('posts.show',$post->id)}}">Show</a>
+
+                                    @can("update")
                                     <a class="btn btn-primary btn-sm mx-1" href="{{ route('posts.edit', $post->id) }}">Edit</a>
+                                    @endcan
                                     <form action="{{ route('posts.destroy', $post->id) }}" method="POST"
                                           style="display: inline-block">
                                         @csrf
