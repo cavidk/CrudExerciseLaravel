@@ -135,7 +135,7 @@ class PostController extends Controller
 
         try {
             $post = Post::findOrFail($id);
-            $this->authorize('delete_post', Post::class);
+            $this->authorize('delete_post', $post);
 
             // Delete the post
             $post->delete();
