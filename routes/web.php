@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
+use App\Jobs\SendMail;
 use App\Mail\OrderShipped;
+use App\Mail\PostPublished;
 use App\Models\Post;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -48,10 +50,14 @@ Route::get('contact', function () {
 });
 
 //create a root for send-mail
-Route::get('send-mail', function () {
-    Mail::send(new OrderShipped());
-    dd('Mail Send Successfully');
-});
+//Route::get('send-mail', function () {
+//    Mail::send(new OrderShipped());
+//    dd('Mail Send Successfully');
+//});
+
+
+
+
 
 require __DIR__ . '/auth.php';
 
@@ -63,3 +69,10 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::resource('posts', PostController::class);
 });
+
+Route::get('send-mail-post', function () {
+    SendMail::dispatch(new PostPublished());
+    dd('Here is your Mail Send Successfully');
+
+});
+
